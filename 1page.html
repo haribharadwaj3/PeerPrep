@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Group Study Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+  <style>
+    .navbar {
+      padding: 10px 20px;
+      background-color: #483A23;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+  
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 24px;
+      color: white;
+      
+    }
+  
+    .dropdown-menu-end {
+      right: 0;
+      left: auto;
+    }
+    .bi-person-circle{
+        font-size: 23px; 
+        color:white;
+    }
+    .hero-section {
+      background-image: url('Images/1PAGE.jpg');
+      background-size: 80%;
+      background-position: center;
+      color: rgb(226, 43, 43);
+      background-repeat: no-repeat;
+      font-weight: bold;
+      padding: 150px 0;
+      text-align: center;
+      
+      
+    }
+    
+  .features-section {
+  background-color: #C18B37; 
+  color: white;
+  padding: 50px 0; 
+  cursor: pointer;
+  }
+  
+  .feature-box {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center; 
+  transition: transform 0.3s; 
+  color: #333;
+  height: 100%;
+  max-width: 450px;
+  margin: 0 auto; 
+  }
+  
+  .feature-box:hover {
+  transform: scale(1.05);
+  }
+  
+  .feature-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #C18B37;
+  }
+  
+  .feature-heading {
+  font-size: 20px; 
+  font-weight: bold;
+  }
+  
+  .feature-description {
+  font-size: 16px;
+  }
+  
+  a {
+  text-decoration: none; 
+  color: inherit; 
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">PeerPrep</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="profile.php">My Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero-section text-center ">
+    <h1>WELCOME TO PEERPREP</h1>
+    <h2>YOUR VIRTUAL STUDY GROUP HUB</h2>
+    <p>Start or join a meeting, access resources, connect with friends,<br>and engage in open doubt discussions to enhance your learning experience.</p>
+  </div>
+
+  <div class="features-section text-center py-5">
+    <h3>BOOST YOUR ACADEMIC PERFORMANCE WITH OUR INNOVATIVE STUDY TOOLS</h3>
+    <h2 class="my-4">Key Features</h2>
+    <b><p>Enhance your study experience with our top features</p></b>
+
+    <div class="container mt-5">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <a href="meeting.html" class="text-decoration-none">
+            <div class="feature-box p-4 border rounded bg-white text-center h-100 shadow">
+              <div class="feature-icon mb-3">
+                <i class="bi bi-camera-video" style="font-size: 2rem;"></i>
+              </div>
+              <div class="feature-heading mb-2 fw-bold">Start/Join a New Meeting</div>
+              <div class="feature-description text-muted">Initiate a virtual study session with your peers to collaborate and discuss academic topics in real-time.</div>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-md-6">
+          <a href="resources.html" class="text-decoration-none">
+            <div class="feature-box p-4 border rounded bg-white text-center h-100 shadow">
+              <div class="feature-icon mb-3">
+                <i class="bi bi-upload" style="font-size: 2rem;"></i>
+              </div>
+              <div class="feature-heading mb-2 fw-bold">Access/Share Resources</div>
+              <div class="feature-description text-muted">Share your resources with other students in virtual study groups to share knowledge and enhance collective learning.</div>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-md-6">
+          <a href="connect.html" class="text-decoration-none">
+          <div class="feature-box p-4 border rounded bg-white text-center h-100 shadow">
+            <div class="feature-icon mb-3">
+              <i class="bi bi-person-lines-fill" style="font-size: 2rem;"></i>
+            </div>
+            <div class="feature-heading mb-2 fw-bold">Connect with Friends</div>
+            <div class="feature-description text-muted">Build a network of study buddies and friends to stay motivated and engaged in your academic pursuits.</div>
+          </div>
+        </a>
+        </div>
+        
+        <div class="col-md-6">
+          <a href="doubts.html" class="text-decoration-none">
+            <div class="feature-box p-4 border rounded bg-white text-center h-100 shadow">
+              <div class="feature-icon mb-3">
+                <i class="bi bi-question-circle" style="font-size: 2rem;"></i>
+              </div>
+              <div class="feature-heading mb-2 fw-bold">Open Doubt Discussion</div>
+              <div class="feature-description text-muted">Engage in open discussions to seek help, clarify doubts, and gain a deeper understanding of challenging topics.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

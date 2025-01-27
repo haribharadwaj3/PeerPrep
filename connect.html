@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Friends</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            margin-bottom: 20px;
+        }
+        .dropdown-menu-end {
+            right: 0;
+            left: auto;
+          }
+        .bi-person-circle{
+            font-size: 23px; 
+            color:white;
+        }
+          .navbar {
+            padding: 10px 20px;
+            background-color: #483A23;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+           
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+          }
+        
+          .navbar-brand {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            
+          }
+
+        .container {
+            margin-top: 20px;
+        }
+        .study-group-card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">PeerPrep</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="profile.php">My Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    
+    <header>
+        <h3>Connect with your peers by joining or creating study groups</h3>
+    </header>
+
+    
+    <div class="container">
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createGroupModal">
+            <i class="fas fa-plus"></i> Create Study Group
+        </button>
+        
+        <div class="study-group-card">
+            <h5>Example Study Group (Public)</h5>
+            <p>Join this group to explore subject-specific discussions.</p>
+            <button class="btn btn-success btn-sm">Join Group</button>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createGroupModalLabel">Create a New Study Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createGroupForm">
+                        <div class="mb-3">
+                            <label for="groupName" class="form-label">Group Name</label>
+                            <input type="text" class="form-control" id="groupName" placeholder="Enter group name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="groupDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="groupDescription" rows="3" placeholder="Enter group description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="groupPrivacy" class="form-label">Privacy</label>
+                            <select class="form-select" id="groupPrivacy" required>
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 hidden" id="inviteSection">
+                            <label for="inviteLink" class="form-label">Invite Friends</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inviteLink" placeholder="Generate an invite link" readonly>
+                                <button type="button" class="btn btn-outline-secondary" id="generateLink">Generate</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Group</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        const groupPrivacySelect = document.getElementById('groupPrivacy');
+        const inviteSection = document.getElementById('inviteSection');
+        const generateLinkButton = document.getElementById('generateLink');
+        const inviteLinkInput = document.getElementById('inviteLink');
+        const groupsContainer = document.querySelector('.container');
+        const createGroupForm = document.getElementById('createGroupForm');
+    
+        // Load existing groups from localStorage on page load
+        window.addEventListener('load', function () {
+            const savedGroups = JSON.parse(localStorage.getItem('studyGroups')) || [];
+            savedGroups.forEach(group => addGroupCard(group));
+        });
+    
+        // Toggle invite link section based on privacy setting
+        groupPrivacySelect.addEventListener('change', function () {
+            if (this.value === 'public') {
+                inviteSection.classList.remove('hidden');
+            } else {
+                inviteSection.classList.add('hidden');
+                inviteLinkInput.value = ''; // Clear the invite link if switching to private
+            }
+        });
+    
+        // Generate invite link for public groups
+        generateLinkButton.addEventListener('click', function () {
+            const randomGroupID = Math.random().toString(36).substring(2, 10); // Generate a random ID
+            const inviteLink = `https://peerprep.com/join?group=${randomGroupID}`; // Example link
+            inviteLinkInput.value = inviteLink;
+        });
+    
+        // Handle group creation
+        createGroupForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const groupName = document.getElementById('groupName').value;
+            const groupDescription = document.getElementById('groupDescription').value;
+            const groupPrivacy = groupPrivacySelect.value;
+            const inviteLink = inviteLinkInput.value;
+    
+            const newGroup = {
+                name: groupName,
+                description: groupDescription,
+                privacy: groupPrivacy,
+                inviteLink: inviteLink || null,
+            };
+    
+            // Add the new group to the page
+            addGroupCard(newGroup);
+    
+            // Save the new group to localStorage
+            const savedGroups = JSON.parse(localStorage.getItem('studyGroups')) || [];
+            savedGroups.push(newGroup);
+            localStorage.setItem('studyGroups', JSON.stringify(savedGroups));
+    
+            // Reset the form and close the modal
+            createGroupForm.reset();
+            inviteSection.classList.add('hidden'); // Hide invite section after submission
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createGroupModal'));
+            modal.hide();
+        });
+    
+        // Function to create and append a group card
+        function addGroupCard(group) {
+            const groupCard = document.createElement('div');
+            groupCard.className = 'study-group-card';
+            groupCard.innerHTML = `
+                <h5>${group.name} (${group.privacy.charAt(0).toUpperCase() + group.privacy.slice(1)})</h5>
+                <p>${group.description}</p>
+                ${
+                    group.privacy === 'public' && group.inviteLink
+                        ? `<p><small>Invite Link: <a href="${group.inviteLink}" target="_blank">${group.inviteLink}</a></small></p>`
+                        : ''
+                }
+                <button class="btn ${group.privacy === 'public' ? 'btn-success' : 'btn-secondary'} btn-sm" data-group-name="${group.name}">
+                    ${group.privacy === 'public' ? 'Join Group' : 'Request Access'}
+                </button>
+                ${
+                    group.privacy === 'private'
+                        ? `
+                        <div class="invite-user">
+                            <input type="text" class="form-control mb-2 username-input" placeholder="Enter username" />
+                            <button class="btn btn-primary btn-sm send-invite" data-group-name="${group.name}">Send Invite</button>
+                        </div>
+                        `
+                        : ''
+                }
+                <button class="btn btn-danger btn-sm delete-group" data-group-name="${group.name}">Delete Group</button>
+            `;
+            groupsContainer.appendChild(groupCard);
+    
+            // Add event listener for "Delete Group"
+            const deleteButton = groupCard.querySelector('.delete-group');
+            deleteButton.addEventListener('click', function () {
+                const groupName = group.name;
+                if (confirm(`Are you sure you want to delete the group "${groupName}"?`)) {
+                    groupCard.remove(); // Remove the group card from the UI
+                    deleteGroupFromLocalStorage(groupName); // Remove the group from localStorage
+                    alert(`Group "${groupName}" has been deleted.`);
+                }
+            });
+    
+            // Add event listener for "Send Invite" if the group is private
+            if (group.privacy === 'private') {
+                const inviteButton = groupCard.querySelector('.send-invite');
+                const usernameInput = groupCard.querySelector('.username-input');
+    
+                if (inviteButton) {
+                    inviteButton.addEventListener('click', function () {
+                        const username = usernameInput.value.trim();
+                        if (username) {
+                            const invites = JSON.parse(localStorage.getItem('groupInvites')) || [];
+                            invites.push({ groupName: group.name, username: username, status: 'Pending' });
+                            localStorage.setItem('groupInvites', JSON.stringify(invites));
+                            alert(`Invite sent to ${username} for group "${group.name}".`);
+                            usernameInput.value = ''; // Clear input field
+                        } else {
+                            alert('Please enter a valid username.');
+                        }
+                    });
+                }
+            }
+        }
+    
+        // Function to delete a group from localStorage
+        function deleteGroupFromLocalStorage(groupName) {
+            const savedGroups = JSON.parse(localStorage.getItem('studyGroups')) || [];
+            const updatedGroups = savedGroups.filter(group => group.name !== groupName);
+            localStorage.setItem('studyGroups', JSON.stringify(updatedGroups));
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule a Meeting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #483A23;
+        color: white;
+        text-align: center;
+        padding: 1em;
+    }
+    .dropdown-menu-end {
+        right: 0;
+        left: auto;
+    }
+    .bi-person-circle{
+        font-size: 23px; 
+        color:white;
+    }
+    .navbar {
+        padding: 10px 20px;
+        background-color: #483A23;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+    
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 24px;
+        color: white;
+        
+    }
+
+
+    main {
+        padding: 20px;
+    }
+
+    section {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    form input, form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    form button {
+        background-color: #483A23;
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 100px;
+    }
+
+
+
+    .upcoming-meetings ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .upcoming-meetings li {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    a {
+        text-decoration: none; 
+        color: inherit; 
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">PeerPrep</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="profile.php">My Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <main>
+        <section class="meeting-form">
+            <h2>New Meeting</h2>
+            <form id="schedule-form">
+                <label for="subject">Subject</label>
+                <select id="subject" name="subject" required>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                </select>
+
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="time">Time</label>
+                <input type="time" id="time" name="time" required>
+
+                <label for="duration">Duration (minutes)</label>
+                <input type="number" id="duration" name="duration" min="30" required>
+
+                <center><button type="submit">Schedule</button></center>
+            </form>
+        </section>
+
+        <section class="upcoming-meetings">
+            <h2>Upcoming Meetings</h2>
+            <ul id="meetings-list">
+                <!-- List of upcoming meetings will be displayed here -->
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById("schedule-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+        
+            const subject = document.getElementById("subject").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+            const duration = document.getElementById("duration").value;
+        
+            const start_time = new Date(`${date}T${time}`).toISOString();
+        
+            const meetingDetails = {
+                topic: `Group Study Session: ${subject}`,
+                start_time,
+                duration: parseInt(duration),
+                agenda: "Group study and discussion",
+            };
+        
+            try {
+                const response = await fetch("schedule_meeting.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(meetingDetails),
+                });
+        
+                if (!response.ok) throw new Error("Failed to schedule meeting");
+        
+                const { meeting } = await response.json();
+                displayMeeting(meeting);
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Could not schedule the meeting. Try again.");
+            }
+        });
+        
+        function displayMeeting(meeting) {
+            const meetingList = document.getElementById("meetings-list");
+            const meetingItem = document.createElement("li");
+
+            meetingItem.innerHTML = `
+                Meeting: ${meeting.topic} | 
+                Join URL: <a href="${meeting.join_url}" target="_blank">${meeting.join_url}</a> 
+                <button onclick="copyLink('${meeting.join_url}')">Copy Link</button>
+            `;
+
+            meetingList.appendChild(meetingItem);
+        }
+
+        function copyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Meeting link copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy the link.');
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

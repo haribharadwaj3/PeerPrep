@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Group Study</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        html {
+            scroll-behavior:smooth;
+        }
+        body {
+            line-height: 1.0;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #483A23;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .navbar-links {
+            list-style: none;
+            display: flex;
+        }
+        
+        .navbar-links li {
+            margin: 0 15px;
+        }
+        
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        .navbar-links a:hover{
+            color: #FFC107;
+        }
+        .navbar-toggle {
+            display: none;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 100px 20px;
+            margin-top: 80px;
+            height: 100vh;
+        }
+        
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 50%;
+            padding-right: 20px;
+        }
+        
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-text p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .hero-buttons .btn {
+            background-color: #C18B37;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .hero-buttons .btn:hover {
+            background-color: #9e772b;
+        }
+        
+        .hero-image {
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .about {
+            background-color: #C18B37;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .about h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .about-content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .about-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .about-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .about-card p, .about-card ul {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .about-card ul {
+            padding-left: 20px;
+        }
+        
+        .about-card ul li {
+            margin-bottom: 10px;
+        }
+        
+        .domains {
+            background-color: #f4f4f4;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .domains h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .domain-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .domain-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .domain-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .domain-card p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .domain-card i {
+            font-size: 36px;
+        
+            margin-bottom: 5px;
+        }
+        
+        .domain-card:hover {
+            transform: translateY(-10px);
+            background-color: #C18B37;
+        }
+        
+        .features {
+            background-color: #e8e8e8;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .features h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card i {
+            font-size: 36px;
+            color: #C18B37;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .testimonials {
+            background-color: #f9f9f9;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .testimonials h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 500px;
+            text-align: left;
+            display: inline-block;
+        }
+        
+        .testimonial-card p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-card span {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        footer {
+            background-color: #483A23;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        footer h2{
+            margin-bottom: 30px;
+        }
+        footer p {
+            font-size: 16px;
+            margin-top: 30px;
+        }
+        .contact-info{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .contact-info i:hover{
+            color: #C18B37;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <a href="#">PeerPrep</a>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+        <div class="navbar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+    
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Welcome to PeerPrep</h1>
+                <p>A collaborative platform where students can share resources, discuss doubts, and join or host study sessions.</p>
+                <div class="hero-buttons">
+                    <a href="logup.html" target="_blank">
+                        <button class="btn">Get Started</button>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="Images/Importance-of-Group-Discussion-In-Teaching-1024x571.jpg" alt="Group Discussion">
+            </div>
+        </div>
+    </div>    
+
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-card">
+                <h3>Our Vision</h3>
+                <p>We envision a world where students are empowered to take control of their education, utilizing a platform that enables open discussions, resource sharing, and guidance. Our goal is to build a supportive community of learners who help each other succeed, nurture leadership in education, promote continuous learning, and create a space where all voices are heard.</p>
+            </div>
+            <div class="about-card">
+                <h3>Our Mission</h3>
+                <p>At Online Group Study, we are dedicated to creating a collaborative environment where students can share resources, discuss academic challenges, engage in study sessions, and receive personalized help. Our mission is to make learning accessible, encourage collaboration, and provide the tools for academic growth and success for every learner.</p>
+            </div>
+            
+            <div class="about-card">
+                <h3>Our Values</h3>
+                <ul>
+                    <li><strong>Collaboration:</strong> We believe in the power of collective intelligence.</li>
+                    <li><strong>Accessibility:</strong> Education should be available to everyone.</li>
+                    <li><strong>Integrity:</strong> We promote honesty and transparency in our interactions.</li>
+                    <li><strong>Empowerment:</strong> We encourage students to take initiative in their learning.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="domains">
+        <h2>Explore Domains like</h2>
+        <div class="domain-cards">
+            <div class="domain-card">
+                <i class="fas fa-flask"></i>
+                <h3>Science </h3>
+                <p>Physics, Chemistry, Biology.</p>
+            </div>
+            <div class="domain-card">
+                <i class="fas fa-square-root-alt"></i>
+                <h3>Mathematics</h3>
+                <p>Algebra, Calculus, Statistics, Geometry.</p>
+            </div>
+            <div class="domain-card">
+                <i class="fas fa-users"></i>
+                <h3>Humanities</h3>
+                <p>History, Literature, Philosophy, Sociology.</p>
+            </div>
+            <div class="domain-card">
+                <i class="fas fa-language"></i>
+                <h3>Languages</h3>
+                <p>Telugu, Hindi, English, Dutch, Spanish.</p>
+            </div>
+            <div class="domain-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Technology and Coding</h3>
+                <p>Web development, App development, Data science, AI/ML.</p>
+            </div>
+            <div class="domain-card">
+                <i class="fas fa-stethoscope"></i>
+                <h3>Health and Medicine</h3>
+                <p>Anatomy, Physiology, Nutrition, Public Health.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Why Join Us?</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <i class="fas fa-upload"></i>
+                <h3>Effortless Material Upload</h3>
+                <p>Easily upload study materials to share with the community.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-comments"></i>
+                <h3>Open Doubt Discussions</h3>
+                <p>Participate in discussions to seek clarifications and share insights.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Scheduled Meetings</h3>
+                <p>Plan sessions with peers for collaborative learning.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Professional Support</h3>
+                <p>Access tutors and professionals for quick help.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-card">
+            <p>"This platform has transformed my learning experience!"</p>
+            <span>- John</span>
+        </div>
+        <div class="testimonial-card">
+            <p>"I found exactly what I needed and made great connections."</p>
+            <span>- Doe</span>
+        </div>
+    </section>
+    <footer id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <div>
+                <i class="fas fa-phone-alt">
+                    <span>1234567890</span>
+                </i>
+            </div>
+            <div>
+                <i class="fas fa-envelope">
+                    <span>abc@gmail.com</span>
+                </i>
+            </div>
+            <div>
+                <i class="fab fa-linkedin">
+                    <span>Linkedin.com</span>
+                </i>
+            </div>
+        </div>
+        <p>&copy; 2024 PeerPrep. All rights reserved.</p>
+    </footer>
+</body>
+</html>

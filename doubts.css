@@ -1,0 +1,99 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #483A23;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+.dropdown-menu-end {
+    right: 0;
+    left: auto;
+  }
+.bi-person-circle{
+    font-size: 23px; 
+    color:white;
+}
+  .navbar {
+    padding: 10px 20px;
+    background-color: #483A23;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
+    
+  }
+
+main {
+    padding: 20px;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input, form select, form textarea, form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button {
+    background-color:#483A23;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display:inline;
+    width:100px;
+    display:flex;
+    justify-content: center;
+}
+
+form button:hover {
+    background-color:#483A23;
+}
+
+.submitted-doubts ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.submitted-doubts li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.hero{
+    display:flex;
+
+}
+a {
+    text-decoration: none; 
+    color: inherit; 
+    }
